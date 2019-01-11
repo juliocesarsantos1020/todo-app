@@ -5,7 +5,7 @@ import PageHeader from './pageHeader'
 import TodoForm from '../telas/todoForm'
 import TodoList from '../telas/todoList'
 
-const URL = "http://localhost:3003/api/todos"
+const URL = "http://localhost:9090/tarefas"
 
 export default class Todo extends Component {
 
@@ -24,8 +24,8 @@ export default class Todo extends Component {
     }
 
     refresh(description = '') {
-        const search = description ? `&description__regex=/${description}/` : ''
-        axios.get(`${URL}/?=-createdAt${search}`)
+        const search = description ? `?description=${description}` : ''
+        axios.get(`${URL}/${search}`)
             .then(resp => this.setState({ ...this.state, description, list: resp.data }))
     }
 
@@ -48,17 +48,17 @@ export default class Todo extends Component {
     }
 
     handleRemove(todo) {
-        axios.delete(`${URL}/${todo._id}`)
+        axios.delete(`${URL}/${todo.idTodo}`)
             .then(resp => this.refresh(this.state.description))
     }
 
     handleMarkAsDone(todo) {
-        axios.put(`${URL}/${todo._id}`, { ...todo, done: true })
+        axios.put(`${URL}/${todo.idTodo}`, { ...todo, done: true })
             .then(resp => this.refresh(this.state.description))
     }
 
     handleMarkAsPending(todo) {
-        axios.put(`${URL}/${todo._id}`, { ...todo, done: false })
+        axios.put(`${URL}/${todo.idTodo}`, { ...todo, done: false })
             .then(resp => this.refresh(this.state.description))
     }
 

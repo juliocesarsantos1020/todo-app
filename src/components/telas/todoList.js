@@ -5,7 +5,7 @@ export default class TodoList extends Component {
     renderRows = () => {
         const list = this.props.list || []
         return list.map(todo => (
-            <tr key={todo._id}>
+            <tr key={todo.idTodo}>
                 <td className={todo.done ? 'markedAsDone' : ''}>{todo.description}</td>
                 <td>
                     <IconButton style="success" icon="check" 
